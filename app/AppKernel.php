@@ -21,11 +21,11 @@ class AppKernel extends Kernel
             new Liip\ImagineBundle\LiipImagineBundle(),
             new FOS\RestBundle\FOSRestBundle(),
             new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
-
             new Sonata\CoreBundle\SonataCoreBundle(),
             new Sonata\BlockBundle\SonataBlockBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Sonata\AdminBundle\SonataAdminBundle(),
+
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
@@ -38,7 +38,6 @@ class AppKernel extends Kernel
                 $bundles[] = new Symfony\Bundle\WebServerBundle\WebServerBundle();
             }
         }
-
         return $bundles;
     }
 
