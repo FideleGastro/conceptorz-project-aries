@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="col text-center">
+        <h1>Ma poissonnerie</h1>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col text-center"><a href="{{ path('fournisseur_create') }}">
+                    <button type="button" class="btn btn-primary">creation fournisseurs</button>
+                </a></div>
+            <div class="col text-center"><a href="{{ path('produit_create') }}">
+                    <button type="button" class="btn btn-primary">creation produits</button>
+                </a></div>
+        </div>
+
+        <div class="row" style="margin-top: 100px;">
+            <div class="col text-center">
+                <h2>Mes fournisseurs</h2>
+            </div>
+        </div>
+        {% for fournisseur in fournisseurs %}
+            <div class="row" style="margin-bottom: 10px; border-bottom: 1px solid #000; padding-top: 10px; padding-bottom: 10px;">
+                <div class="col-6">{{ fournisseur.nom }}</div>
+                <div class="col-2">
+                    <a data-toggle="collapse" href="#produitsFournisseurs{{ fournisseur.id }}" role="button" aria-expanded="false" aria-controls="produitsFournisseurs{{ fournisseur.id }}">
+                        <button type="button" class="btn btn-primary">Ses produits</button>
+                    </a>
+                </div>
+                <div class="col-2">
+                    <a href="{{ path('fournisseur_update', {'id' : fournisseur.id }) }}">
+                        <button type="button" class="btn btn-primary">Update</button>
+                    </a>
+                </div>
+                <div class="col-2">
+                    <a href="{{ path('fournisseur_delete', {'id' : fournisseur.id }) }}">
+                        <button type="button" class="btn btn-primary">Delete</button>
+                    </a>
+                </div>
+                <div style="margin-top: 15px; width: 100%;" class="collapse" id="produitsFournisseurs{{ fournisseur.id }}">
+                    <div class="card card-body">
+                        <div class="row">
+                            {% if fournisseur.fournisseursProduits|length %}
+                                {% for produit in fournisseur.fournisseursProduits %}
+                                    <div class="col-4">
+                                        - {{ produit.produits.nom }} <a title="edit" href="{{ path('produit_update', {'id' : produit.produits.id}) }}"><i class="fas fa-edit"></i></a>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <div class="col">Aucun produit.</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="row" style="margin-top: 100px;">
+            <div class="col text-center">
+                <h2>Mes produits</h2>
+            </div>
+        </div>
+        {% for produit in produits %}
+            <div class="row" style="margin-bottom: 10px; border-bottom: 1px solid #000; padding-top: 10px; padding-bottom: 10px;">
+                <div class="col-6">{{ produit.nom }}</div>
+                <div class="col-2">
+                    <a data-toggle="collapse" href="#fournisseursProduits{{ produit.id }}" role="button" aria-expanded="false" aria-controls="fournisseursProduits{{ produit.id }}">
+                        <button type="button" class="btn btn-primary">Les fournisseurs</button>
+                    </a>
+                </div>
+                <div class="col-2">
+                    <a href="{{ path('produit_update', {'id' : produit.id }) }}">
+                        <button type="button" class="btn btn-primary">Update</button>
+                    </a>
+                </div>
+                <div class="col-2">
+                    <a href="{{ path('produit_delete', {'id' : produit.id }) }}">
+                        <button type="button" class="btn btn-primary">Delete</button>
+                    </a>
+                </div>
+                <div style="margin-top: 15px; width: 100%;" class="collapse" id="fournisseursProduits{{ produit.id }}">
+                    <div class="card card-body">
+                        <div class="row">
+                            {% if produit.produitsFournisseurs|length %}
+                                {% for fournisseur in produit.produitsFournisseurs %}
+                                    <div class="col-4">
+                                        - {{ fournisseur.fournisseurs.nom }} <a title="edit" href="{{ path('fournisseur_update', {'id' : fournisseur.fournisseurs.id }) }}"><i class="fas fa-edit"></i></a>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <div class="col">Aucun fournisseur.</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+
+    </div>
+{% endblock %}
